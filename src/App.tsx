@@ -244,7 +244,7 @@ export default function App() {
     <div className="min-h-screen bg-[#EFEFEF] text-gray-900 font-sans selection:bg-[#38BDF8] selection:text-white overflow-x-hidden">
       
       {/* SECTION 1: HERO (Full viewport height) */}
-      <section id="hero" className="relative h-screen min-h-[700px] flex flex-col justify-between overflow-hidden bg-[#EFEFEF]">
+      <section id="hero" className="relative h-screen min-h-[600px] sm:min-h-[700px] flex flex-col justify-between overflow-hidden bg-[#EFEFEF]">
         
         {/* Full-screen animated shader overlay */}
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -438,13 +438,13 @@ export default function App() {
         )}
 
         {/* Hero Content (z-20) */}
-        <div className="max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16 lg:pb-20 relative z-20 flex flex-col items-start mt-auto">
+        <div className="max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-10 sm:pb-16 lg:pb-20 pt-4 sm:pt-0 relative z-20 flex flex-col items-start mt-auto">
           
-          <span className="text-[15px] sm:text-[18px] text-gray-900 tracking-wider font-semibold mb-5 sm:mb-8 uppercase">
+          <span className="text-[14px] sm:text-[18px] text-gray-900 tracking-wider font-semibold mb-4 sm:mb-8 uppercase">
             Corvetheq IT Solutions
           </span>
 
-          <h1 className="text-[clamp(1.75rem,7vw,4.2rem)] sm:text-[clamp(2.5rem,5vw,4.2rem)] font-medium leading-[1.08] tracking-[-0.03em] text-gray-900 max-w-[1200px]">
+          <h1 className="text-[clamp(1.65rem,6.5vw,4.2rem)] sm:text-[clamp(2.5rem,5vw,4.2rem)] font-medium leading-[1.12] sm:leading-[1.08] tracking-[-0.03em] text-gray-900 max-w-[1200px]">
             We Build Powerful Digital Solutions <br className="hidden sm:block" />
             <span className="sm:hidden"> </span>
             That Help Businesses Scale, Innovate <br className="hidden sm:block" />
@@ -453,7 +453,7 @@ export default function App() {
           </h1>
 
           {/* CTA Row */}
-          <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto items-start sm:items-center">
+          <div className="mt-6 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto items-start sm:items-center">
             
             {/* Orange (sky blue) button */}
             <button
