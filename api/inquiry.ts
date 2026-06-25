@@ -38,6 +38,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    console.log(`📤 Attempting to send emails...`);
+    console.log(`📤 FROM: ${fromEmail}`);
+    console.log(`📤 TO OWNER: ${notificationEmail}`);
+    console.log(`📤 TO CUSTOMER: ${email}`);
+
     // 1. Send notification email to business owner
     const ownerMailHtml = `
       <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
@@ -92,6 +97,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`✅ Notification email sent to owner: ${notificationEmail}`);
 
     // 2. Send thank you email to customer
+    console.log(`📤 Now sending thank you email to customer: ${email}`);
+    
     const customerMailHtml = `
       <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
         <div style="background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%); padding: 40px 20px; text-align: center;">
@@ -136,7 +143,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       </div>
     `;
 
-    await resend.emails.send({
+    const customerEmailResult = await resend.emails.send({
       from: `Corvetheq IT Solutions <${fromEmail}>`,
       to: [email],
       subject: `Thank You for Your Inquiry - Corvetheq IT Solutions`,
@@ -145,10 +152,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     console.log(`✅ Thank you email sent to customer: ${email}`);
+    console.log(`📧 Customer email result:`, JSON.stringify(customerEmailResult));
 
     return res.status(200).json({
       success: true,
-      message: "Booking inquiry received successfully."
+      message: "Booking inquiry received successfully.",
+      debug: {
+        ownerEmailSent: true,
+        customerEmailSent: true,
+        customerEmailId: customerEmailResult.data?.id
+      }
     });
 
   } catch (err: any) {
