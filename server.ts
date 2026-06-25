@@ -1,10 +1,12 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import dotenv from "dotenv";
 
 dotenv.config();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function startServer() {
   const app = express();
@@ -33,65 +35,23 @@ async function startServer() {
     console.log(`⏰ Time:    ${new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })} (Kolkata Time)`);
     console.log("=".repeat(50) + "\n");
 
-    // Send emails if SMTP is configured
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = process.env.SMTP_PORT;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-    const notificationEmail = process.env.NOTIFICATION_EMAIL;
+    // Send emails using Resend
+    const notificationEmail = process.env.NOTIFICATION_EMAIL || "corvetheq@gmail.com";
+    const fromEmail = process.env.FROM_EMAIL || "onboarding@resend.dev";
 
-    if (smtpHost && smtpPort && smtpUser && smtpPass && notificationEmail) {
+    if (process.env.RESEND_API_KEY) {
       try {
-        const transporter = nodemailer.createTransport({
-          host: smtpHost,
-          port: parseInt(smtpPort, 10),
-          secure: process.env.SMTP_SECURE === "true",
-          auth: {
-            user: smtpUser,
-            pass: smtpPass,
-          },
-        });
-
         // 1. Send notification email to business owner
-        const ownerMailSubject = `New Booking Inquiry - ${name}`;
-        
-        // Plain text version for better deliverability
-        const ownerMailText = `
-NEW BOOKING INQUIRY
-
-A customer has submitted a booking inquiry with the following details:
-
-Name: ${name}
-Email: ${email}
-Mobile: ${mobile}
-Service: ${service}
-Submitted: ${new Date().toLocaleString("en-US", { 
-  timeZone: "Asia/Kolkata",
-  dateStyle: "long",
-  timeStyle: "short"
-})}
-
-Reply to customer: ${email}
-
----
-Corvetheq IT Solutions - Automated Booking Notification
-        `.trim();
-
         const ownerMailHtml = `
           <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
-            <!-- Header -->
             <div style="background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%); padding: 30px 20px; text-align: center;">
               <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;">New Booking Inquiry</h1>
               <p style="color: #f0f9ff; margin: 8px 0 0 0; font-size: 14px;">You have received a new service inquiry</p>
             </div>
-            
-            <!-- Content -->
             <div style="padding: 30px 20px;">
               <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
                 A customer has submitted a booking inquiry with the following details:
               </p>
-              
-              <!-- Details Table -->
               <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
                 <tr>
                   <td style="padding: 12px; background-color: #f9fafb; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #1f2937; width: 140px;">👤 Name</td>
@@ -111,100 +71,54 @@ Corvetheq IT Solutions - Automated Booking Notification
                 </tr>
                 <tr>
                   <td style="padding: 12px; background-color: #f9fafb; font-weight: 600; color: #1f2937;">⏰ Submitted</td>
-                  <td style="padding: 12px; background-color: #ffffff; color: #374151;">${new Date().toLocaleString("en-US", { 
-                    timeZone: "Asia/Kolkata",
-                    dateStyle: "long",
-                    timeStyle: "short"
-                  })}</td>
+                  <td style="padding: 12px; background-color: #ffffff; color: #374151;">${new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata", dateStyle: "long", timeStyle: "short" })}</td>
                 </tr>
               </table>
-              
-              <!-- Action Button -->
               <div style="text-align: center; margin: 30px 0 20px 0;">
                 <a href="mailto:${email}" style="display: inline-block; background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%); color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 15px;">Reply to Customer</a>
               </div>
             </div>
-            
-            <!-- Footer -->
             <div style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
               <p style="color: #6b7280; font-size: 13px; margin: 0;">Corvetheq IT Solutions - Automated Booking Notification</p>
             </div>
           </div>
         `;
 
-        await transporter.sendMail({
-          from: `"${process.env.SMTP_SENDER_NAME || "Corvetheq IT Solutions"}" <${smtpUser}>`,
-          to: notificationEmail,
-          replyTo: email,
-          subject: ownerMailSubject,
-          text: ownerMailText,
+        await resend.emails.send({
+          from: `Corvetheq IT Solutions <${fromEmail}>`,
+          to: [notificationEmail],
+          subject: `New Booking Inquiry - ${name}`,
           html: ownerMailHtml,
-          headers: {
-            'X-Priority': '1',
-            'X-Mailer': 'Corvetheq Booking System',
-          },
+          reply_to: email,
         });
 
-        console.log("✅ Notification email sent to owner");
+        console.log(`✅ Notification email sent to owner: ${notificationEmail}`);
 
         // 2. Send thank you email to customer
-        const customerMailSubject = `Thank You for Your Inquiry - Corvetheq IT Solutions`;
-        
-        // Plain text version for better deliverability
-        const customerMailText = `
-Dear ${name},
-
-Thank you for reaching out to Corvetheq IT Solutions! We're excited about the opportunity to work with you.
-
-We have received your inquiry for ${service} and one of our team members will get back to you within 24 hours.
-
-Your inquiry details have been recorded and our team is reviewing them. We'll reach out to discuss your requirements in detail.
-
-In the meantime, if you have any urgent questions, feel free to contact us directly at:
-Email: ${notificationEmail}
-Phone: +91 98864 81493
-
-Best regards,
-The Corvetheq Team
-
----
-Corvetheq IT Solutions
-Transforming Ideas Into Scalable Digital Solutions
-        `.trim();
-
         const customerMailHtml = `
           <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
-            <!-- Header -->
             <div style="background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%); padding: 40px 20px; text-align: center;">
               <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 600;">Thank You! 🎉</h1>
               <p style="color: #f0f9ff; margin: 12px 0 0 0; font-size: 16px;">We've received your inquiry</p>
             </div>
-            
-            <!-- Content -->
             <div style="padding: 40px 30px;">
               <p style="color: #374151; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0;">
                 Dear <strong>${name}</strong>,
               </p>
-              
               <p style="color: #374151; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0;">
                 Thank you for reaching out to <strong>Corvetheq IT Solutions</strong>! We're excited about the opportunity to work with you.
               </p>
-              
               <p style="color: #374151; font-size: 16px; line-height: 1.7; margin: 0 0 30px 0;">
                 We have received your inquiry for <strong style="color: #0EA5E9;">${service}</strong> and one of our team members will get back to you within 24 hours.
               </p>
-              
-              <!-- Info Box -->
               <div style="background-color: #f0f9ff; border-left: 4px solid #38BDF8; padding: 20px; border-radius: 6px; margin: 30px 0;">
                 <p style="color: #0c4a6e; font-size: 15px; line-height: 1.6; margin: 0; font-weight: 500;">
                   📋 Your inquiry details have been recorded and our team is reviewing them. We'll reach out to discuss your requirements in detail.
                 </p>
               </div>
-              
               <p style="color: #374151; font-size: 16px; line-height: 1.7; margin: 30px 0 20px 0;">
                 In the meantime, if you have any urgent questions, feel free to contact us directly at:
               </p>
-              
               <div style="text-align: center; margin: 25px 0;">
                 <p style="margin: 8px 0;">
                   <a href="mailto:${notificationEmail}" style="color: #0EA5E9; text-decoration: none; font-weight: 500;">📧 ${notificationEmail}</a>
@@ -213,14 +127,11 @@ Transforming Ideas Into Scalable Digital Solutions
                   <span style="color: #6b7280; font-weight: 500;">📱 +91 98864 81493</span>
                 </p>
               </div>
-              
               <p style="color: #374151; font-size: 16px; line-height: 1.7; margin: 30px 0 0 0;">
                 Best regards,<br>
                 <strong style="color: #0EA5E9;">The Corvetheq Team</strong>
               </p>
             </div>
-            
-            <!-- Footer -->
             <div style="background-color: #f9fafb; padding: 25px 20px; text-align: center; border-top: 1px solid #e5e7eb;">
               <p style="color: #6b7280; font-size: 14px; margin: 0 0 8px 0; font-weight: 600;">Corvetheq IT Solutions</p>
               <p style="color: #9ca3af; font-size: 13px; margin: 0;">Transforming Ideas Into Scalable Digital Solutions</p>
@@ -228,18 +139,12 @@ Transforming Ideas Into Scalable Digital Solutions
           </div>
         `;
 
-        await transporter.sendMail({
-          from: `"${process.env.SMTP_SENDER_NAME || "Corvetheq IT Solutions"}" <${smtpUser}>`,
-          to: email,
-          replyTo: notificationEmail,
-          subject: customerMailSubject,
-          text: customerMailText,
+        await resend.emails.send({
+          from: `Corvetheq IT Solutions <${fromEmail}>`,
+          to: [email],
+          subject: `Thank You for Your Inquiry - Corvetheq IT Solutions`,
           html: customerMailHtml,
-          headers: {
-            'X-Priority': '3',
-            'X-Mailer': 'Corvetheq Booking System',
-            'X-Entity-Ref-ID': `booking-${Date.now()}`,
-          },
+          reply_to: notificationEmail,
         });
 
         console.log(`✅ Thank you email sent to customer: ${email}`);
@@ -249,7 +154,7 @@ Transforming Ideas Into Scalable Digital Solutions
         console.error("Full error details:", err);
       }
     } else {
-      console.warn("⚠️  Email not configured. Skipping email notifications.");
+      console.warn("⚠️  Resend API key not configured. Skipping email notifications.");
     }
 
     return res.status(200).json({
