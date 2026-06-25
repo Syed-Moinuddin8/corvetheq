@@ -244,7 +244,7 @@ export default function App() {
     <div className="min-h-screen bg-[#EFEFEF] text-gray-900 font-sans selection:bg-[#38BDF8] selection:text-white overflow-x-hidden">
       
       {/* SECTION 1: HERO (Full viewport height) */}
-      <section id="hero" className="relative min-h-screen sm:h-screen sm:min-h-[700px] flex flex-col justify-center sm:justify-between overflow-hidden bg-[#EFEFEF]">
+      <section id="hero" className="relative min-h-[75vh] sm:h-screen sm:min-h-[700px] flex flex-col justify-center sm:justify-between overflow-hidden bg-[#EFEFEF]">
         
         {/* Full-screen animated shader overlay */}
         <div className="absolute inset-0 z-10 pointer-events-none">
