@@ -449,12 +449,12 @@ export default function App() {
           </h1>
 
           {/* Description paragraph */}
-          <p className="text-[13px] sm:text-[15px] text-gray-600 leading-relaxed mt-3 sm:mt-5 max-w-[600px]">
-            Corvetheq IT Solutions is a technology-driven digital solutions company specializing in Website Development, Mobile Applications, Software Development, UI/UX Design, and more. Serving startups, SMEs, and enterprises worldwide.
+          <p className="text-[14px] sm:text-[16px] text-gray-600 leading-[1.7] mt-5 sm:mt-6 max-w-[650px]">
+            From cutting-edge web platforms to intelligent mobile apps, we transform your vision into reality with precision engineering and creative excellence. Let's build something extraordinary together.
           </p>
 
           {/* CTA Row */}
-          <div className="mt-4 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto items-start sm:items-center">
+          <div className="mt-6 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto items-start sm:items-center">
             
             {/* Orange (sky blue) button */}
             <button
