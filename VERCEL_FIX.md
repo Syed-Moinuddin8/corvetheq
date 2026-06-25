@@ -53,7 +53,7 @@ Environment: Production, Preview, Development
 
 ```
 Name: SMTP_PASS
-Value: xoujeofydohzogiw
+Value: YOUR-NEW-APP-PASSWORD
 Environment: Production, Preview, Development
 ```
 

@@ -80,7 +80,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_USER=corvetheq@gmail.com
-SMTP_PASS=xoujeofydohzogiw
+SMTP_PASS=YOUR-NEW-APP-PASSWORD-HERE
 SMTP_SENDER_NAME=Corvetheq IT Solutions
 NOTIFICATION_EMAIL=corvetheq@gmail.com
 ```

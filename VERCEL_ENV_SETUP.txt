@@ -1,0 +1,117 @@
+═══════════════════════════════════════════════════════
+  VERCEL ENVIRONMENT VARIABLES - QUICK SETUP
+═══════════════════════════════════════════════════════
+
+🚀 Your logo is now fixed! Vercel is auto-deploying the update.
+
+⚠️  NOW FIX THE EMAIL ISSUE (2 minutes):
+
+═══════════════════════════════════════════════════════
+STEP 1: GO TO VERCEL SETTINGS
+═══════════════════════════════════════════════════════
+
+1. Open: https://vercel.com/dashboard
+2. Click your "corvetheq" project
+3. Click "Settings" tab
+4. Click "Environment Variables" (left sidebar)
+
+═══════════════════════════════════════════════════════
+STEP 2: ADD THESE 7 VARIABLES
+═══════════════════════════════════════════════════════
+
+For EACH variable below:
+- Click "Add New"
+- Enter Name and Value
+- Select: Production, Preview, Development (all 3)
+- Click "Save"
+
+───────────────────────────────────────────────────────
+Variable 1:
+───────────────────────────────────────────────────────
+Name:  SMTP_HOST
+Value: smtp.gmail.com
+
+───────────────────────────────────────────────────────
+Variable 2:
+───────────────────────────────────────────────────────
+Name:  SMTP_PORT
+Value: 587
+
+───────────────────────────────────────────────────────
+Variable 3:
+───────────────────────────────────────────────────────
+Name:  SMTP_SECURE
+Value: false
+
+───────────────────────────────────────────────────────
+Variable 4:
+───────────────────────────────────────────────────────
+Name:  SMTP_USER
+Value: corvetheq@gmail.com
+
+───────────────────────────────────────────────────────
+Variable 5:
+───────────────────────────────────────────────────────
+Name:  SMTP_PASS
+Value: YOUR-NEW-APP-PASSWORD-HERE
+
+───────────────────────────────────────────────────────
+Variable 6:
+───────────────────────────────────────────────────────
+Name:  SMTP_SENDER_NAME
+Value: Corvetheq IT Solutions
+
+───────────────────────────────────────────────────────
+Variable 7:
+───────────────────────────────────────────────────────
+Name:  NOTIFICATION_EMAIL
+Value: corvetheq@gmail.com
+
+═══════════════════════════════════════════════════════
+STEP 3: REDEPLOY
+═══════════════════════════════════════════════════════
+
+1. Go to "Deployments" tab
+2. Click "..." menu on latest deployment
+3. Click "Redeploy"
+4. Wait 1-2 minutes
+
+═══════════════════════════════════════════════════════
+STEP 4: TEST
+═══════════════════════════════════════════════════════
+
+1. Go to your live website
+2. Fill out the booking form
+3. Submit
+4. Check your email inbox!
+
+═══════════════════════════════════════════════════════
+✅ AFTER SETUP
+═══════════════════════════════════════════════════════
+
+Your website will have:
+✅ Logo visible
+✅ Emails working
+✅ Fully functional
+
+═══════════════════════════════════════════════════════
+🆘 STILL HAVING ISSUES?
+═══════════════════════════════════════════════════════
+
+If emails don't work after adding variables:
+
+1. Check Vercel Function Logs:
+   Dashboard → Deployments → Latest → Functions
+
+2. Look for errors like:
+   - "Missing environment variables"
+   - "SMTP authentication failed"
+   - "Connection timeout"
+
+3. Solution:
+   - Try regenerating Gmail App Password
+   - Or switch to SendGrid (see SENDGRID_SETUP.md)
+
+═══════════════════════════════════════════════════════
+
+🎯 START NOW: https://vercel.com/dashboard
