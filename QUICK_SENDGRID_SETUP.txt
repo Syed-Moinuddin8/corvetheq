@@ -1,0 +1,61 @@
+═══════════════════════════════════════════════════════
+  SENDGRID QUICK SETUP - 5 MINUTES
+═══════════════════════════════════════════════════════
+
+STEP 1: CREATE ACCOUNT
+→ https://signup.sendgrid.com/
+→ Use: corvetheq@gmail.com
+→ Verify email
+
+STEP 2: CREATE API KEY
+→ Settings > API Keys > Create API Key
+→ Name: Corvetheq Booking System
+→ Permission: Mail Send (Restricted)
+→ COPY THE API KEY (starts with SG.)
+
+STEP 3: VERIFY SENDER
+→ Settings > Sender Authentication > Single Sender
+→ From: corvetheq@gmail.com
+→ Name: Corvetheq IT Solutions
+→ Verify email link
+
+STEP 4: UPDATE .ENV FILE
+Replace Gmail settings with:
+
+SMTP_HOST=smtp.sendgrid.net
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=apikey
+SMTP_PASS=SG.your-api-key-here
+SMTP_SENDER_NAME=Corvetheq IT Solutions
+NOTIFICATION_EMAIL=corvetheq@gmail.com
+
+STEP 5: RESTART SERVER
+Ctrl+C to stop
+npm run dev to start
+
+STEP 6: TEST
+Fill booking form → Check inbox (not spam!)
+
+═══════════════════════════════════════════════════════
+  IMPORTANT NOTES
+═══════════════════════════════════════════════════════
+
+✓ SMTP_USER is literally "apikey" (not your email)
+✓ SMTP_PASS is your SendGrid API key (starts with SG.)
+✓ Free tier: 100 emails/day
+✓ Emails will go to INBOX (not spam)
+✓ 99%+ delivery rate
+
+═══════════════════════════════════════════════════════
+  NEED HELP?
+═══════════════════════════════════════════════════════
+
+Check: SENDGRID_SETUP.md for detailed guide
+
+Common Issues:
+- "Not verified" → Verify sender email first
+- "Auth failed" → Check SMTP_USER is "apikey"
+- Still spam? → Wait 24h, have recipients mark "Not Spam"
+
+═══════════════════════════════════════════════════════
