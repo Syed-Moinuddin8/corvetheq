@@ -244,7 +244,7 @@ export default function App() {
     <div className="min-h-screen bg-[#EFEFEF] text-gray-900 font-sans selection:bg-[#38BDF8] selection:text-white overflow-x-hidden">
       
       {/* SECTION 1: HERO (Full viewport height) */}
-      <section id="hero" className="relative h-screen min-h-[600px] sm:min-h-[700px] flex flex-col justify-between overflow-hidden bg-[#EFEFEF]">
+      <section id="hero" className="relative min-h-screen sm:h-screen sm:min-h-[700px] flex flex-col justify-between overflow-hidden bg-[#EFEFEF]">
         
         {/* Full-screen animated shader overlay */}
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -438,7 +438,7 @@ export default function App() {
         )}
 
         {/* Hero Content (z-20) */}
-        <div className="max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-10 sm:pb-16 lg:pb-20 pt-4 sm:pt-0 relative z-20 flex flex-col items-start mt-auto">
+        <div className="max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-10 sm:pb-16 lg:pb-20 pt-20 sm:pt-0 relative z-20 flex flex-col items-start sm:mt-auto">
           
           <span className="text-[14px] sm:text-[18px] text-gray-900 tracking-wider font-semibold mb-4 sm:mb-8 uppercase">
             Corvetheq IT Solutions
