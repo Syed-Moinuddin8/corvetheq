@@ -1,0 +1,82 @@
+═══════════════════════════════════════════════════════
+  CORVETHEQ DEPLOYMENT CHECKLIST
+═══════════════════════════════════════════════════════
+
+✅ STEP 1: GITHUB UPLOAD (5 minutes)
+═══════════════════════════════════════════════════════
+
+1. [ ] Go to https://github.com/new
+2. [ ] Create new repository:
+       Name: corvetheq-website
+       Visibility: Private
+       ❌ Don't check any boxes!
+3. [ ] Click "Create repository"
+4. [ ] Copy your repository URL
+5. [ ] Run in terminal:
+       git remote add origin YOUR-GITHUB-URL
+       git branch -M main
+       git push -u origin main
+6. [ ] Verify files are on GitHub
+7. [ ] Verify .env is NOT uploaded
+
+═══════════════════════════════════════════════════════
+✅ STEP 2: VERCEL DEPLOYMENT (5 minutes)
+═══════════════════════════════════════════════════════
+
+1. [ ] Go to https://vercel.com/signup
+2. [ ] Sign up with GitHub
+3. [ ] Click "Add New..." → "Project"
+4. [ ] Import "corvetheq-website"
+5. [ ] Framework: Vite
+6. [ ] Build Command: npm run build
+7. [ ] Output Directory: dist
+8. [ ] Add Environment Variables:
+       SMTP_HOST=smtp.gmail.com
+       SMTP_PORT=587
+       SMTP_SECURE=false
+       SMTP_USER=corvetheq@gmail.com
+       SMTP_PASS=xoujeofydohzogiw
+       SMTP_SENDER_NAME=Corvetheq IT Solutions
+       NOTIFICATION_EMAIL=corvetheq@gmail.com
+9. [ ] Click "Deploy"
+10. [ ] Wait 2-3 minutes
+11. [ ] Click "Visit" to see live site
+
+═══════════════════════════════════════════════════════
+✅ STEP 3: TEST LIVE WEBSITE
+═══════════════════════════════════════════════════════
+
+1. [ ] Open your Vercel URL
+2. [ ] Test navigation (About, Services, Contact)
+3. [ ] Submit a test booking
+4. [ ] Check email notification received
+5. [ ] Test on mobile device
+6. [ ] Share URL with team
+
+═══════════════════════════════════════════════════════
+📋 YOUR URLS
+═══════════════════════════════════════════════════════
+
+GitHub Repo: https://github.com/YOUR-USERNAME/corvetheq-website
+Vercel Dashboard: https://vercel.com/dashboard
+Live Website: https://corvetheq-website.vercel.app (after deploy)
+
+═══════════════════════════════════════════════════════
+🆘 NEED HELP?
+═══════════════════════════════════════════════════════
+
+- GitHub Issues: See GITHUB_SETUP.md
+- Deployment Issues: See DEPLOYMENT_GUIDE.md
+- Email Issues: See EMAIL_SETUP.md
+
+═══════════════════════════════════════════════════════
+🎉 CONGRATULATIONS!
+═══════════════════════════════════════════════════════
+
+Your website is now:
+✅ Backed up on GitHub
+✅ Live on the internet
+✅ Automatically deploying on updates
+✅ Ready for customers!
+
+═══════════════════════════════════════════════════════
