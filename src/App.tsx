@@ -448,6 +448,11 @@ export default function App() {
             We Build Powerful Digital Solutions That Help Businesses Scale, Innovate & Lead Their Industry.
           </h1>
 
+          {/* Description paragraph */}
+          <p className="text-[13px] sm:text-[15px] text-gray-600 leading-relaxed mt-3 sm:mt-5 max-w-[600px]">
+            Corvetheq IT Solutions is a technology-driven digital solutions company specializing in Website Development, Mobile Applications, Software Development, UI/UX Design, and more. Serving startups, SMEs, and enterprises worldwide.
+          </p>
+
           {/* CTA Row */}
           <div className="mt-4 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto items-start sm:items-center">
             
